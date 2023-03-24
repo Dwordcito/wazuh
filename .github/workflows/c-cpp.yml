@@ -13,10 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Install FUSE Package
-      run: sudo apt-get update && sudo apt-get install -y fuse
-    - name: Add Docker User to Fuse Group
-      run: sudo usermod -aG fuse $USER && newgrp fuse
     #- name: Install mingw
     #  run: sudo apt install gcc-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 nsis -y
     #- name: make deps
@@ -29,6 +25,14 @@ jobs:
     #    platform: 'windows-latest'
     - name: Mount Shared Folder
       uses: docker/setup-buildx-action@v1
+      with:
+        name: my-shared-volume
+        driver: local
+        driver_opts: |
+          type=nfs
+          o=addr=host.docker.internal,nolock,soft,rw
+          device=:/mnt/shared
+        mount: type=bind,source=/mnt/shared,target=/mnt/shared
     - name: Copy folder to Shared Folder
       run: cp -r src/data_provider /mnt/shared/
     - name: Set up Windows Environment
