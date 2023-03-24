@@ -26,7 +26,7 @@ jobs:
     - name: Mount Shared Folder
       uses: docker/setup-buildx-action@v1
     - name: Copy folder to Shared Folder
-      run: cp src/data_provider /mnt/shared/
+      run: cp -r src/data_provider /mnt/shared/
     - name: Set up Windows Environment
       uses: actions/setup-node@v2.4.0
       with:
