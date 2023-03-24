@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install mingw
-      run: apt install gcc-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-x86-64
+      run: sudo apt install gcc-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 -y
     - name: make deps
       run: make -C src deps TARGET=winagent
     - name: make
