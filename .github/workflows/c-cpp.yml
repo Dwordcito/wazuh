@@ -20,8 +20,8 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: data_provider
-        path: src/data_provider
+        name: build
+        path: src/
         
   run-on-windows:
     needs: build
@@ -30,10 +30,16 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
-          name: data_provider
-          path: C:\build\
+          name: build
+          path: C:\wazuh\
       - name: Run Program on Windows
-        run: C:\build\build\bin/sysinfo_test_tool.exe
+        run: cp C:\wazuh\data_provider\build\bin\sysinfo_test_tool.exe C:\wazuh\
+             cp C:\wazuh\data_provider\build\bin\sysinfo.dll C:\wazuh\
+             cp C:\wazuh\win32\libgcc_s_dw2-1.dll C:\wazuh\
+             cp C:\wazuh\win32\libstdc++-6.dll C:\wazuh\
+             cp C:\wazuh\win32\libwinpthread-1.dll C:\wazuh\
+             C:\wazuh\sysinfo_test_tool.exe
+             
 
 
 
