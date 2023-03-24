@@ -24,11 +24,10 @@ jobs:
     #  with:
     #    platform: 'windows-latest'
     - name: Mount Shared Folder
-      uses: docker/mount-host-volume@v1
+      uses: docker/mount-hosts@v3
       with:
-       type: bind
-       source: /mnt/shared
-       target: /mnt/shared
+        paths: |
+          /mnt/shared:/mnt/shared
 
     - name: Copy folder to Shared Folder
       run: cp -r src/data_provider /mnt/shared/
