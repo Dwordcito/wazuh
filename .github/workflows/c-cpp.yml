@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     #- name: Install mingw
@@ -28,15 +26,18 @@ jobs:
       with:
         name: data_provider
         path: src/data_provider
-    - name: Set up Windows Environment
-      uses: actions/setup-node@v2.4.0
-      with:
-        platform: 'windows-latest'
-    - name: Download Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: data_provider
-    - name: Run Program on Windows
-      run: C:\shared\data_provider\bin\sysinfo_test_tool.exe
+        
+  run-on-windows:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: data_provider
+          path: build/
+      - name: Run Program on Windows
+        run: type C:\build\data_provider\CMakeLists.txt
+
 
 
