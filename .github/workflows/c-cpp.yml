@@ -23,18 +23,19 @@ jobs:
     #  uses: actions/setup-node@v2.4.0
     #  with:
     #    platform: 'windows-latest'
-    - name: Mount Shared Folder
-      uses: docker/mount-hosts@v3
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        paths: |
-          /mnt/shared:/mnt/shared
-
-    - name: Copy folder to Shared Folder
-      run: cp -r src/data_provider /mnt/shared/
+        name: src/data_provider
+        path: data_provider
     - name: Set up Windows Environment
       uses: actions/setup-node@v2.4.0
       with:
         platform: 'windows-latest'
+    - name: Download Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: src/data_provider
     - name: Run Program on Windows
       run: C:\shared\data_provider\bin\sysinfo_test_tool.exe
 
