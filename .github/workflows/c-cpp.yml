@@ -37,7 +37,7 @@ jobs:
           name: data_provider
           path: C:\build\
       - name: Run Program on Windows
-        run: type C:\build\data_provider\CMakeLists.txt
+        run: type C:\build\CMakeLists.txt
 
 
 
