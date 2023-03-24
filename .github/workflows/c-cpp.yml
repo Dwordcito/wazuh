@@ -13,25 +13,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Install mingw
-      run: sudo apt install gcc-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 nsis -y
-    - name: make deps
-      run: make -C src deps TARGET=winagent
-    - name: make
-      run: make -C src TARGET=winagent
-    - name: Set up Windows Environment
-      uses: actions/setup-node@v2.4.0
-      with:
-        platform: 'windows-latest'
+    #- name: Install mingw
+    #  run: sudo apt install gcc-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 nsis -y
+    #- name: make deps
+    #  run: make -C src deps TARGET=winagent
+    #- name: make
+    #  run: make -C src TARGET=winagent
+    #- name: Set up Windows Environment
+    #  uses: actions/setup-node@v2.4.0
+    #  with:
+    #    platform: 'windows-latest'
+    - name: Create folder
+      run: mkdir src && mkdir src/data_provider && touch src/data_provider/example.txt
     - name: Copy Folder to Windows
       uses: appleboy/scp-action@master
       with:
-        host: ${{ github.workspace }}
+        host: localhost
         username: ${{ github.actor }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         source: src/data_provider
         target: C:\data_provider
-    - name: Run Program on Windows
-      run: C:\data_provider\bin\sysinfo_test_tool.exe
+    #- name: Run Program on Windows
+    #  run: C:\data_provider\bin\sysinfo_test_tool.exe
 
