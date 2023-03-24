@@ -35,7 +35,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: data_provider
-          path: build/
+          path: C:\build\
       - name: Run Program on Windows
         run: type C:\build\data_provider\CMakeLists.txt
 
