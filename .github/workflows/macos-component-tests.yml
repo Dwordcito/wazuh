@@ -1,0 +1,25 @@
+name: Components test on macOS
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    # Build wazuh agent for macOS.
+    - name: Build wazuh agent for macOS
+      run: |
+        rm -rf src/VERSION
+        make deps -C src TARGET=agent -j2
+        make -C src TARGET=agent -j2
+    - name: Run tests
+      run: |
+        ./src/data_provider/build/bin/sysinfo_test_tool
+        ./src/wazuh_modules/syscollector/build/bin/syscollector_test_tool 10
+        ./src/shared_modules/dbsync/build/bin/dbsync_test_tool
+        ./src/shared_modules/rsync/build/bin/rsync_test_tool
